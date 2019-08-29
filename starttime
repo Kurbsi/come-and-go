@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# write date and timestamp to file
+eval $(date +Y=%Y\;m=%m\;d=%d\;H=%H\;M=%M)
+if   (( "10#$M" < 8 )) ; then 
+    M="00"
+elif (( "10#$M" < 23 )) ; then 
+    M="15"
+elif (( "10#$M" < 38 )) ; then 
+    M="30"
+elif (( "10#$M" < 53 )) ; then 
+    M="45"
+else  
+    M="00"
+    H=$((10#$H + 1))
+	if (("$H" < 10)) ; then
+		H=$(printf "%.2d" "$H")
+	fi
+fi
+
+TIME="; $H:$M:00"
+DATE=$(date +"%d-%m-%Y")
+FILE="/home/kh/Dokumente/Vispiron/Zeiterfassung.csv"
+
+START=$DATE$TIME
+echo ----------------
+echo $START
+echo ----------------
+# sed -i '$a $DATE$TIME:00' $FILE
+echo $START>>$FILE

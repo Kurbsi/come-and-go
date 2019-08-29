@@ -1,0 +1,20 @@
+#!/bin/sh 
+
+eval $(date +Y=%Y\;m=%m\;d=%d\;H=%H\;M=%M)
+if [ "$M" -lt 8 ] ; then 
+    M=00
+elif [ "$M" -lt 23 ] ; then 
+    M=15
+elif [ "$M" -lt 38 ] ; then 
+    M=30
+elif [ "$M" -lt 53 ] ; then 
+    M=45
+else 
+    M=00
+    H=$((H + 1))
+fi
+
+TIME="$H:$M:00"
+
+FILE="/home/kh/Dokumente/Vispiron/Zeiterfassung.csv"
+sed -i "$ s/$/; $TIME;/" $FILE
